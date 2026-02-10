@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.educandoweb.course.entities.Category;
+
 import com.educandoweb.course.entities.Product;
 import com.educandoweb.course.repositories.ProductRepository;
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
+
+
 
 import jakarta.persistence.EntityNotFoundException;
 
