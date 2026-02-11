@@ -50,6 +50,13 @@ public class ProductResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@GetMapping("/category/{categoryId}")
+	public ResponseEntity<List<Product>> findByCategoryId(@PathVariable Long categoryId) {
+	    List<Product> list = service.findByCategoryId(categoryId);
+	    return ResponseEntity.ok().body(list);
+	}
+
+	
 	@PostMapping
 	public ResponseEntity<Product> insert(@RequestBody Product obj){
 		obj = service.insert(obj);
@@ -70,11 +77,10 @@ public class ProductResource {
 	}
 	
 	 @PostMapping("/upload")
-	    public ResponseEntity<Map<String, String>> uploadImage(
-	            @RequestParam("file") MultipartFile file) {
-
-	        String url = uploadService.save(file);
-	        return ResponseEntity.ok(Map.of("url", url));
-	    }
+	 public ResponseEntity<Map<String, String>> uploadImage(
+	     @RequestParam("file") MultipartFile file) {
+	     String url = uploadService.save(file);
+	     return ResponseEntity.ok(Map.of("url", url));
+	 }
 	
 }

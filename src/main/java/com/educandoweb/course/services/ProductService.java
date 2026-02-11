@@ -1,5 +1,6 @@
 package com.educandoweb.course.services;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +59,17 @@ public class ProductService {
 	public void delete(Long id) {
 		Optional<Product> obj = repository.findById(id);
 		if (obj.isPresent()) {
+			Product product = obj.get();
+			if (product.getImgUrl() != null && !product.getImgUrl().isEmpty()) {
+	            String uploadDir = "uploads/products/";
+	            String imageUrl = product.getImgUrl();
+	            String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+	            File file = new File(uploadDir + fileName);
+
+	            if (file.exists()) {
+	                file.delete();
+	            }
+	        }
 			try {
 				repository.deleteById(id);
 			} catch (DataIntegrityViolationException e) {
@@ -67,6 +79,15 @@ public class ProductService {
 			throw new ResourceNotFoundException(id);
 		}
 	} 
+
+	public List<Product> findByCategoryId(Long categoryId) {		
+		
+	    if (categoryId != null) {
+	        return repository.findByCategoryId(categoryId);
+	    }
+
+	    return repository.findAll();
+	}
 
 	
 }
