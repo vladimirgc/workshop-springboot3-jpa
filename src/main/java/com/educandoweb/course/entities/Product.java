@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +35,8 @@ public class Product implements Serializable{
 	private String description;
 	private Double price;
 	private String imgUrl;
+	@Column(unique = true, nullable = true)
+	private String barCode;
 	
 	@ManyToMany
 	@JoinTable(name = "tb_product_category", 
@@ -48,13 +51,14 @@ public class Product implements Serializable{
 		
 	}
 
-	public Product(Long id, String name, String description, Double price, String imgUrl) {
+	public Product(Long id, String name, String description, Double price, String imgUrl, String barCode) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
+		this.barCode = barCode;
 	}
 
 	public Long getId() {
@@ -96,6 +100,14 @@ public class Product implements Serializable{
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
+	
+	public String getBarCode() {
+		return barCode;
+	}
+
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
+	}
 
 	public Set<Category> getCategories() {
 		return categories;
@@ -127,5 +139,13 @@ public class Product implements Serializable{
 		return Objects.equals(id, other.id);
 	}
 
-		
+	 
+	 public void generateBarcode() {
+	      if (this.barCode == null || this.barCode.isEmpty()) {
+	          this.barCode = java.util.UUID.randomUUID()
+	                                        .toString()
+	                                        .replace("-", "")
+	                                        .substring(0, 13);
+	        }
+	    }
 }
