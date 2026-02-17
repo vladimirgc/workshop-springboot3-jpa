@@ -16,5 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	Optional<Product> findByBarCode(String barCode);
 
     boolean existsByBarCode(String barCode);
+    
+
 	
 }

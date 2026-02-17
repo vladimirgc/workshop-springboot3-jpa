@@ -18,7 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.services.UserService;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController

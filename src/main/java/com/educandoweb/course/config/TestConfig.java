@@ -72,7 +72,7 @@ public class TestConfig implements CommandLineRunner{
 		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
 
-		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "21988888888", "123456");
+		User u1 = new User(null, "CONSUMIDOR_FINAL", "", "", "");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "21977777777", "123456");
 		User u3 = new User(null, "João Silva", "joao@gmail.com", "21966666666", "123456");
 		User u4 = new User(null, "Ana Souza", "ana@gmail.com", "21955555555", "123456");
@@ -85,43 +85,43 @@ public class TestConfig implements CommandLineRunner{
 		User u11 = new User(null, "Lucas Pereira", "lucas@gmail.com", "21888888888", "123456");
 		User u12 = new User(null, "Camila Fernandes", "camila@gmail.com", "21877777777", "123456");
 	
-		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, u1);
+		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.ABERTO, u1);
 		o1.setNumero(orderService.gerarNumeroPedido());
 
-		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITINGS_PAYMENT, u2);
+		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.EM_PRODUCAO, u2);
 		o2.setNumero(orderService.gerarNumeroPedido());
 
-		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITINGS_PAYMENT, u1);
+		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.EM_PRODUCAO, u1);
 		o3.setNumero(orderService.gerarNumeroPedido());
 
-		Order o4 = new Order(null, Instant.parse("2019-08-01T10:15:30Z"), OrderStatus.PAID, u3);
+		Order o4 = new Order(null, Instant.parse("2019-08-01T10:15:30Z"), OrderStatus.ABERTO, u3);
 		o4.setNumero(orderService.gerarNumeroPedido());
 
-		Order o5 = new Order(null, Instant.parse("2019-08-03T14:22:11Z"), OrderStatus.SHIPPED, u4);
+		Order o5 = new Order(null, Instant.parse("2019-08-03T14:22:11Z"), OrderStatus.DEVOLVIDO, u4);
 		o5.setNumero(orderService.gerarNumeroPedido());
 
-		Order o6 = new Order(null, Instant.parse("2019-08-05T09:05:45Z"), OrderStatus.DELIVERED, u5);
+		Order o6 = new Order(null, Instant.parse("2019-08-05T09:05:45Z"), OrderStatus.ENVIADO, u5);
 		o6.setNumero(orderService.gerarNumeroPedido());
 
-		Order o7 = new Order(null, Instant.parse("2019-08-10T18:33:50Z"), OrderStatus.CANCELED, u6);
+		Order o7 = new Order(null, Instant.parse("2019-08-10T18:33:50Z"), OrderStatus.CANCELADO, u6);
 		o7.setNumero(orderService.gerarNumeroPedido());
 
-		Order o8 = new Order(null, Instant.parse("2019-08-12T21:17:05Z"), OrderStatus.PAID, u7);
+		Order o8 = new Order(null, Instant.parse("2019-08-12T21:17:05Z"), OrderStatus.ABERTO, u7);
 		o8.setNumero(orderService.gerarNumeroPedido());
 
-		Order o9 = new Order(null, Instant.parse("2019-08-15T07:44:19Z"), OrderStatus.WAITINGS_PAYMENT, u8);
+		Order o9 = new Order(null, Instant.parse("2019-08-15T07:44:19Z"), OrderStatus.EM_PRODUCAO, u8);
 		o9.setNumero(orderService.gerarNumeroPedido());
 
-		Order o10 = new Order(null, Instant.parse("2018-08-18T16:29:37Z"), OrderStatus.SHIPPED, u9);
+		Order o10 = new Order(null, Instant.parse("2018-08-18T16:29:37Z"), OrderStatus.ENVIADO, u9);
 		o10.setNumero(orderService.gerarNumeroPedido());
 
-		Order o11 = new Order(null, Instant.parse("2018-08-20T11:11:11Z"), OrderStatus.DELIVERED, u10);
+		Order o11 = new Order(null, Instant.parse("2018-08-20T11:11:11Z"), OrderStatus.DEVOLVIDO, u10);
 		o11.setNumero(orderService.gerarNumeroPedido());
 
-		Order o12 = new Order(null, Instant.parse("2017-08-22T13:55:42Z"), OrderStatus.CANCELED, u11);
+		Order o12 = new Order(null, Instant.parse("2017-08-22T13:55:42Z"), OrderStatus.CANCELADO, u11);
 		o12.setNumero(orderService.gerarNumeroPedido());
 
-		Order o13 = new Order(null, Instant.parse("2017-08-25T19:40:00Z"), OrderStatus.PAID, u12);
+		Order o13 = new Order(null, Instant.parse("2017-08-25T19:40:00Z"), OrderStatus.ABERTO, u12);
 		o13.setNumero(orderService.gerarNumeroPedido());
 
 		

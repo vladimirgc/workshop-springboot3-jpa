@@ -50,6 +50,16 @@ public class ProductResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@GetMapping("/barcode/{barCode}")
+	public ResponseEntity<Product> findByBarcode(@PathVariable String barCode) {
+	    Product product = service.findByBarcode(barCode);
+	    if (product == null) {
+	        return ResponseEntity.notFound().build();
+	    }
+	    return ResponseEntity.ok(product);
+	}
+
+	
 	@GetMapping("/category/{categoryId}")
 	public ResponseEntity<List<Product>> findByCategoryId(@PathVariable Long categoryId) {
 	    List<Product> list = service.findByCategoryId(categoryId);

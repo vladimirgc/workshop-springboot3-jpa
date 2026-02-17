@@ -141,5 +141,9 @@ public class ProductService {
 		    return (mod == 0) ? 0 : 10 - mod;
 		}
 
+		public Product findByBarcode(String barCode) {
+		    return repository.findByBarCode(barCode)
+		                     .orElse(null);
+		}
 	
 }
