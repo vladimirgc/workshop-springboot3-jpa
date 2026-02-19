@@ -2,6 +2,7 @@ package com.educandoweb.course.config;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,13 +14,14 @@ import com.educandoweb.course.entities.Order;
 import com.educandoweb.course.entities.OrderItem;
 import com.educandoweb.course.entities.Payment;
 import com.educandoweb.course.entities.Product;
-import com.educandoweb.course.entities.User;
+import com.educandoweb.course.entities.CorporateClient;
+import com.educandoweb.course.entities.IndividualClient;
 import com.educandoweb.course.entities.enums.OrderStatus;
 import com.educandoweb.course.repositories.CategoryRepository;
 import com.educandoweb.course.repositories.OrderItemRepository;
 import com.educandoweb.course.repositories.OrderRepository;
 import com.educandoweb.course.repositories.ProductRepository;
-import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.repositories.ClientRepository;
 import com.educandoweb.course.services.OrderService;
 
 @Configuration
@@ -27,7 +29,7 @@ import com.educandoweb.course.services.OrderService;
 public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
-	private UserRepository userRepository;
+	private ClientRepository clientRepository;
 	
 	@Autowired
 	private OrderRepository orderRepository;
@@ -72,18 +74,23 @@ public class TestConfig implements CommandLineRunner{
 		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
 
-		User u1 = new User(null, "CONSUMIDOR_FINAL", "", "", "");
-		User u2 = new User(null, "Alex Green", "alex@gmail.com", "21977777777", "123456");
-		User u3 = new User(null, "João Silva", "joao@gmail.com", "21966666666", "123456");
-		User u4 = new User(null, "Ana Souza", "ana@gmail.com", "21955555555", "123456");
-		User u5 = new User(null, "Carlos Mendes", "carlos@gmail.com", "21944444444", "123456");
-		User u6 = new User(null, "Fernanda Lima", "fernanda@gmail.com", "21933333333", "123456");
-		User u7 = new User(null, "Bruno Costa", "bruno@gmail.com", "21922222222", "123456");
-		User u8 = new User(null, "Juliana Alves", "juliana@gmail.com", "21911111111", "123456");
-		User u9 = new User(null, "Rafael Martins", "rafael@gmail.com", "21900000000", "123456");
-		User u10 = new User(null, "Patricia Rocha", "patricia@gmail.com", "21899999999", "123456");
-		User u11 = new User(null, "Lucas Pereira", "lucas@gmail.com", "21888888888", "123456");
-		User u12 = new User(null, "Camila Fernandes", "camila@gmail.com", "21877777777", "123456");
+		IndividualClient u1 = new IndividualClient(null, "Main Street", "100", "", "New York", "NY", "10001", "alex@gmail.com", "111111111", "12345678901", "Alex Green");
+		IndividualClient u2 = new IndividualClient(null, "Oak Street", "200", "", "Chicago", "IL", "60007", "joao@gmail.com", "222222222", "98765432100", "João Silva");
+		IndividualClient u3 = new IndividualClient(null, "Pine Road", "300", "", "Miami", "FL", "33101", "ana@gmail.com", "333333333", "11122233344", "Ana Souza");
+		IndividualClient u4 = new IndividualClient(null, "Maple Street", "400", "", "Phoenix", "AZ", "85001", "carlos@gmail.com", "444444444", "22233344455", "Carlos Mendes");
+		IndividualClient u5 = new IndividualClient(null, "Cedar Avenue", "500", "", "Miami", "FL", "33101", "fernanda@gmail.com", "555555555", "33344455566", "Fernanda Lima");
+		IndividualClient u6 = new IndividualClient(null, "Sunset Blvd", "600", "", "San Diego", "CA", "92101", "bruno@gmail.com", "666666666", "44455566677", "Bruno Costa");
+		IndividualClient u7 = new IndividualClient(null, "Broadway", "700", "Suite 10", "New York", "NY", "10002", "juliana@gmail.com", "777777777", "55566677788", "Juliana Alves");
+		IndividualClient u8 = new IndividualClient(null, "Lake Shore Dr", "800", "", "Chicago", "IL", "60008", "rafael@gmail.com", "888888888", "66677788899", "Rafael Martins");
+		IndividualClient u9 = new IndividualClient(null, "Ocean Drive", "900", "", "Miami", "FL", "33102", "patricia@gmail.com", "999999999", "77788899900", "Patricia Rocha");
+		IndividualClient u10 = new IndividualClient(null, "Elm Street", "1000", "", "Dallas", "TX", "75001", "lucas@gmail.com", "101010101", "88899900011", "Lucas Pereira");
+		IndividualClient u11 = new IndividualClient(null, "River Road", "1100", "", "Seattle", "WA", "98001", "camila@gmail.com", "111111111", "99900011122", "Camila Fernandes");
+		IndividualClient u12 = new IndividualClient(null, "Hill Street", "1200", "", "Boston", "MA", "02101", "marcos@gmail.com", "121212121", "00011122233", "Marcos Silva");
+
+		
+		CorporateClient c1 = new CorporateClient(null, "Business Ave", "500", "Suite 10", "Los Angeles", "CA", "90001", "contact@techcorp.com", "444444444", "11222333000199", "Tech Corp", "123456789");
+		CorporateClient c2 = new CorporateClient(null, "Industrial Road", "800", "", "Houston", "TX", "77001", "finance@buildit.com", "555555555", "99888777000155", "BuildIt Ltd", "987654321");
+
 	
 		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.ABERTO, u1);
 		o1.setNumero(orderService.gerarNumeroPedido());
@@ -125,10 +132,11 @@ public class TestConfig implements CommandLineRunner{
 		o13.setNumero(orderService.gerarNumeroPedido());
 
 		
-		userRepository.saveAll(Arrays.asList(
-		        u1, u2, u3, u4, u5, u6,
-		        u7, u8, u9, u10, u11, u12
-		));
+		clientRepository.saveAll(List.of(
+			    u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12,
+			    c1, c2
+			));
+
 
 		orderRepository.saveAll(Arrays.asList(
 		        o1, o2, o3, o4, o5, o6,

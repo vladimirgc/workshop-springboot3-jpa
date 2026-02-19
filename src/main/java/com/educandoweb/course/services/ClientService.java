@@ -7,36 +7,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.educandoweb.course.entities.User;
-import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.entities.Client;
+import com.educandoweb.course.repositories.ClientRepository;
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class UserService {
+public class ClientService {
 	
 	@Autowired
-	private UserRepository repository;
+	private ClientRepository repository;
 	
-	public List<User> findAll(){
+	public List<Client> findAll(){
 		
 		return repository.findAll();
 		
 	}
 	
-	public User findById(Long id) {
-		Optional<User> obj = repository.findById(id);
+	public Client findById(Long id) {
+		Optional<Client> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
-	public User insert(User obj) {
+	public Client insert(Client obj) {
 		return repository.save(obj);
 	}
 	
 	public void delete(Long id) {
-		Optional<User> obj = repository.findById(id);
+		Optional<Client> obj = repository.findById(id);
 		if (obj.isPresent()) {
 			try {
 				repository.deleteById(id);
@@ -49,9 +49,9 @@ public class UserService {
 	} 
 	
 	
-	public User update(Long id, User obj) {
+	public Client update(Long id, Client obj) {
 		try {
-		User entity = repository.getReferenceById(id);
+		Client entity = repository.getReferenceById(id);
 		updateData(entity, obj);
 		return repository.save(entity);
 		}catch(EntityNotFoundException e) {
@@ -59,8 +59,7 @@ public class UserService {
 		}
 	}
 
-	private void updateData(User entity, User obj) {
-		entity.setName(obj.getName());
+	private void updateData(Client entity, Client obj) {
 		entity.setEmail(obj.getEmail());
 		entity.setPhone(obj.getPhone());		
 	}
