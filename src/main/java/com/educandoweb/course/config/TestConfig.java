@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.educandoweb.course.entities.Brand;
 import com.educandoweb.course.entities.Category;
 import com.educandoweb.course.entities.Order;
 import com.educandoweb.course.entities.OrderItem;
@@ -17,16 +18,15 @@ import com.educandoweb.course.entities.Product;
 import com.educandoweb.course.entities.CorporateClient;
 import com.educandoweb.course.entities.IndividualClient;
 import com.educandoweb.course.entities.enums.OrderStatus;
-import com.educandoweb.course.repositories.CategoryRepository;
-import com.educandoweb.course.repositories.OrderItemRepository;
-import com.educandoweb.course.repositories.OrderRepository;
-import com.educandoweb.course.repositories.ProductRepository;
-import com.educandoweb.course.repositories.ClientRepository;
+import com.educandoweb.course.repositories.*;
 import com.educandoweb.course.services.OrderService;
 
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner{
+
+	@Autowired
+    private BrandRepository brandRepository;
 	
 	@Autowired
 	private ClientRepository clientRepository;
@@ -44,7 +44,11 @@ public class TestConfig implements CommandLineRunner{
 	private OrderItemRepository orderItemRepository;
 	
 	@Autowired
-    private OrderService orderService; 
+    private OrderService orderService;
+
+    TestConfig(BrandRepository brandRepository) {
+        this.brandRepository = brandRepository;
+    } 
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -54,16 +58,34 @@ public class TestConfig implements CommandLineRunner{
 		Category cat3 = new Category(null, "Computers");
 		Category cat4 = new Category(null, "Gamer");
 		
-		Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "", "2093035968245");
-		Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "", null);
-		Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "", null);
-		Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "", null);
-		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "", null);
-		Product p6 = new Product(null, "Age of Empires", "Game for PC.", 135.99, "http://localhost:8080/uploads/products/28bfb729-2e6d-414e-a823-8708eba3495e-Age_of_Empires_II.jpg", "5488194547672");
+		Brand b1 = new Brand(null, "Microsoft");
+		Brand b2 = new Brand(null, "Apple");
+		Brand b3 = new Brand(null, "Pearson");
+		Brand b4 = new Brand(null, "Saraiva");
+		Brand b5 = new Brand(null, "O'Reilly");
+		Brand b6 = new Brand(null, "TechBooks");
+		Brand b7 = new Brand(null, "Samsung");
+		Brand b8 = new Brand(null, "Packt Publishing");
 		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
+		brandRepository.saveAll(Arrays.asList(b1, b2, b3, b4, b5, b6, b7, b8));
+		
+		Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5,"", "2093035968245");
+		p1.setBrand(b3);
+		Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "", null);
+		p2.setBrand(b7);
+		Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "", null);
+		p3.setBrand(b2);
+		Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "", null);
+		p4.setBrand(b7);
+		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "", null);
+		p5.setBrand(b8);
+		Product p6 = new Product(null, "Age of Empires", "Game for PC.", 135.99, "http://localhost:8080/uploads/products/4eecf924-b621-4777-9a18-496d0f75eed1-Age_of_Empires_II.jpg", "5488194547672");
+		p6.setBrand(b1);
+		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
 		
+				
 		p1.getCategories().add(cat2);
 		p2.getCategories().add(cat1);
 		p2.getCategories().add(cat3);
@@ -71,6 +93,8 @@ public class TestConfig implements CommandLineRunner{
 		p4.getCategories().add(cat3);
 		p5.getCategories().add(cat2);
 		p6.getCategories().add(cat4);
+		
+		
 		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
 
