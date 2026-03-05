@@ -98,7 +98,7 @@ public class TestConfig implements CommandLineRunner{
 		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
 
-		IndividualClient u1 = new IndividualClient(null, "Main Street", "100", "", "New York", "NY", "10001", "alex@gmail.com", "111111111", "12345678901", "Alex Green");
+		IndividualClient u1 = new IndividualClient(null, "", "", "", "", "", "", "", "", "", "USUARIO_FINAL");
 		IndividualClient u2 = new IndividualClient(null, "Oak Street", "200", "", "Chicago", "IL", "60007", "joao@gmail.com", "222222222", "98765432100", "João Silva");
 		IndividualClient u3 = new IndividualClient(null, "Pine Road", "300", "", "Miami", "FL", "33101", "ana@gmail.com", "333333333", "11122233344", "Ana Souza");
 		IndividualClient u4 = new IndividualClient(null, "Maple Street", "400", "", "Phoenix", "AZ", "85001", "carlos@gmail.com", "444444444", "22233344455", "Carlos Mendes");
@@ -128,7 +128,7 @@ public class TestConfig implements CommandLineRunner{
 		Order o4 = new Order(null, Instant.parse("2019-08-01T10:15:30Z"), OrderStatus.ABERTO, u3);
 		o4.setNumero(orderService.gerarNumeroPedido());
 
-		Order o5 = new Order(null, Instant.parse("2019-08-03T14:22:11Z"), OrderStatus.DEVOLVIDO, u4);
+		Order o5 = new Order(null, Instant.parse("2019-08-03T14:22:11Z"), OrderStatus.FINALIZADO, u4);
 		o5.setNumero(orderService.gerarNumeroPedido());
 
 		Order o6 = new Order(null, Instant.parse("2019-08-05T09:05:45Z"), OrderStatus.ENVIADO, u5);
@@ -146,7 +146,7 @@ public class TestConfig implements CommandLineRunner{
 		Order o10 = new Order(null, Instant.parse("2018-08-18T16:29:37Z"), OrderStatus.ENVIADO, u9);
 		o10.setNumero(orderService.gerarNumeroPedido());
 
-		Order o11 = new Order(null, Instant.parse("2018-08-20T11:11:11Z"), OrderStatus.DEVOLVIDO, u10);
+		Order o11 = new Order(null, Instant.parse("2018-08-20T11:11:11Z"), OrderStatus.FINALIZADO, u10);
 		o11.setNumero(orderService.gerarNumeroPedido());
 
 		Order o12 = new Order(null, Instant.parse("2017-08-22T13:55:42Z"), OrderStatus.CANCELADO, u11);
@@ -197,13 +197,13 @@ public class TestConfig implements CommandLineRunner{
 		        oi17, oi18, oi19
 		));
 	
-		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), 181.00, "PIX", null, null, o1);
 		o1.setPayment(pay1);
 		
-		Payment pay2 = new Payment(null, Instant.parse("2019-08-01T12:20:30Z"), o4);
+		Payment pay2 = new Payment(null, Instant.parse("2019-08-01T12:20:30Z"), 201.98, "DINHEIRO", null, null, o4);
 		o4.setPayment(pay2);
 
-		Payment pay3 = new Payment(null, Instant.parse("2019-08-12T23:30:00Z"), o8);
+		Payment pay3 = new Payment(null, Instant.parse("2019-08-12T23:30:00Z"), 100.99, "PIX", null, null, o8);
 		o8.setPayment(pay3);
 
 		

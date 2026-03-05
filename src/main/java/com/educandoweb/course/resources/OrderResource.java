@@ -60,9 +60,18 @@ public class OrderResource {
 
 	@PostMapping
 	public ResponseEntity<Order> insert(@RequestBody Order obj){
-	    obj = service.insert(obj); 	   
-	    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-	    return ResponseEntity.created(uri).body(obj);
+		// chama o service que já associa os itens e payment
+	    Order savedOrder = service.insert(obj);
+
+	    // gera a URI do recurso criado
+	    URI uri = ServletUriComponentsBuilder
+	                .fromCurrentRequest()
+	                .path("/{id}")
+	                .buildAndExpand(savedOrder.getId())
+	                .toUri();
+
+	    // retorna 201 Created com o objeto salvo
+	    return ResponseEntity.created(uri).body(savedOrder);
 	}
 
 	@PutMapping("/{id}")

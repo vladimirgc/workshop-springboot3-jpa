@@ -27,6 +27,10 @@ public class Payment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant moment;
+	private Double amountPaid; // valor pago
+	private String paymentMethod; // DINHEIRO, DEBITO, CARTAO_CREDITO, PIX
+	private Integer installments; // parcelas do cartão
+	private Double interest; // juros se houver
 	
 	@JsonIgnore
 	@OneToOne
@@ -37,12 +41,18 @@ public class Payment implements Serializable {
 		
 	}
 
-	public Payment(Long id, Instant moment, Order order) {
+	public Payment(Long id, Instant moment, Double amountPaid, String paymentMethod, Integer installments,
+			Double interest, Order order) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		this.amountPaid = amountPaid;
+		this.paymentMethod = paymentMethod;
+		this.installments = installments;
+		this.interest = interest;
 		this.order = order;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -58,6 +68,39 @@ public class Payment implements Serializable {
 
 	public void setMoment(Instant moment) {
 		this.moment = moment;
+	}
+
+		
+	public Double getAmountPaid() {
+		return amountPaid;
+	}
+
+	public void setAmountPaid(Double amountPaid) {
+		this.amountPaid = amountPaid;
+	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+
+	public Integer getInstallments() {
+		return installments;
+	}
+
+	public void setInstallments(Integer installments) {
+		this.installments = installments;
+	}
+
+	public Double getInterest() {
+		return interest;
+	}
+
+	public void setInterest(Double interest) {
+		this.interest = interest;
 	}
 
 	public Order getOrder() {

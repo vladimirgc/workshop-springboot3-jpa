@@ -5,7 +5,7 @@ public enum OrderStatus {
 		ABERTO(1),
 		EM_PRODUCAO(2),
 		ENVIADO(3),
-		DEVOLVIDO(4),
+		FINALIZADO(4),
 		CANCELADO(5);
 	
 		private int code;

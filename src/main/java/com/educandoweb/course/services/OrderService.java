@@ -1,5 +1,6 @@
 package com.educandoweb.course.services;
 
+import java.time.Instant;
 import java.time.Year;
 import java.util.List;
 import java.util.Optional;
@@ -9,9 +10,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.educandoweb.course.entities.Order;
+import com.educandoweb.course.entities.OrderItem;
 import com.educandoweb.course.entities.OrderSequence;
+import com.educandoweb.course.entities.Payment;
+import com.educandoweb.course.repositories.OrderItemRepository;
 import com.educandoweb.course.repositories.OrderRepository;
 import com.educandoweb.course.repositories.OrderSequenceRepository;
+import com.educandoweb.course.repositories.PaymentRepository;
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
 
@@ -27,28 +32,53 @@ public class OrderService {
 	@Autowired
 	private OrderSequenceRepository orderSequenceRepository;
 	
+	 @Transactional
+	 public Order insert(Order obj) {
+
+	        obj.setId(null);
+	        
+	     // GERA O NÚMERO DO PEDIDO
+	        Long numeroGerado = gerarNumeroPedido();
+	        obj.setNumero(numeroGerado);
+
+	        //associa cada item ao pedido
+	        if (obj.getItems() != null) {
+	            for (OrderItem item : obj.getItems()) {
+	                item.setOrder(obj);
+	            }
+	        }
+
+	        //ESSENCIAL para @MapsId
+	        if (obj.getPayment() != null) {
+	            obj.getPayment().setOrder(obj);
+	            obj.getPayment().setMoment(Instant.now());
+	        }
+
+	        //UMA ÚNICA operação resolve tudo
+	        return repository.save(obj);
+	    }
 	
-	@Transactional
-	public Long gerarNumeroPedido() {
-	    int anoAtual = Year.now().getValue();
+	    @Transactional
+		public Long gerarNumeroPedido() {
+		    int anoAtual = Year.now().getValue();
 
-	    OrderSequence seq = orderSequenceRepository.findById(anoAtual)
-	            .orElseGet(() -> {
-	                OrderSequence newSeq = new OrderSequence();
-	                newSeq.setAno(anoAtual);
-	                newSeq.setUltimaSequencia(0);
-	                // Salva imediatamente no banco para garantir inserção
-	                return orderSequenceRepository.save(newSeq);
-	            });
+		    OrderSequence seq = orderSequenceRepository.findById(anoAtual)
+		            .orElseGet(() -> {
+		                OrderSequence newSeq = new OrderSequence();
+		                newSeq.setAno(anoAtual);
+		                newSeq.setUltimaSequencia(0);
+		                // Salva imediatamente no banco para garantir inserção
+		                return orderSequenceRepository.save(newSeq);
+		            });
 
-	    int novaSequencia = seq.getUltimaSequencia() + 1;
-	    seq.setUltimaSequencia(novaSequencia);
-	    orderSequenceRepository.save(seq);
+		    int novaSequencia = seq.getUltimaSequencia() + 1;
+		    seq.setUltimaSequencia(novaSequencia);
+		    orderSequenceRepository.save(seq);
 
-	    // Converte ano + sequência em Long
-	    String numeroStr = anoAtual + String.format("%04d", novaSequencia);
-	    return Long.parseLong(numeroStr);
-	}
+		    // Converte ano + sequência em Long
+		    String numeroStr = anoAtual + String.format("%04d", novaSequencia);
+		    return Long.parseLong(numeroStr);
+		}
 	
 	public List<Order> findAll(){
 		
@@ -61,10 +91,7 @@ public class OrderService {
 		return obj.get();
 	}
 	
-	public Order insert(Order order) {
-		order.setNumero(gerarNumeroPedido());
-        return repository.save(order);
-    }
+	
 	
 	public Order update(Long id, Order obj) {
         try {
@@ -80,6 +107,17 @@ public class OrderService {
         entity.setMoment(obj.getMoment());
         entity.setOrderStatus(obj.getOrderStatus());
         entity.setClient(obj.getClient());
+        
+        // Atualizar pagamento
+        if (obj.getPayment() != null) {
+            obj.getPayment().setOrder(entity); // ESSENCIAL para @MapsId
+
+            if (obj.getPayment().getMoment() == null) {
+                obj.getPayment().setMoment(Instant.now());
+            }
+
+            entity.setPayment(obj.getPayment());
+        }
     }
 
     public void delete(Long id) {
@@ -95,5 +133,6 @@ public class OrderService {
         }
     }
 
+    
 
 }
