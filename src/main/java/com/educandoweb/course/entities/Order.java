@@ -9,6 +9,7 @@ import java.util.Set;
 import com.educandoweb.course.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -50,6 +51,9 @@ public class Order implements Serializable {
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
 	
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	private Shipment shipment;
+	
 	public Order() {
 		
 		
@@ -61,6 +65,7 @@ public class Order implements Serializable {
 		this.moment = moment;
 		setOrderStatus(orderStatus);
 		this.client = client;
+		
 	}
 
 	public Long getId() {
@@ -117,6 +122,19 @@ public class Order implements Serializable {
 		return items;
 	}
 	
+	
+	
+	public Shipment getShipment() {
+		return shipment;
+	}
+
+	public void setShipment(Shipment shipment) {
+		this.shipment = shipment;
+		if (shipment != null) {
+            shipment.setOrder(this); 
+        }
+	}
+
 	public Double getTotal() {
 		double sum = 0.0;
 		for (OrderItem x : items) {

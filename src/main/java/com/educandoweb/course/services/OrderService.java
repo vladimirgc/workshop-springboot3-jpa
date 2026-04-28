@@ -13,10 +13,10 @@ import com.educandoweb.course.entities.Order;
 import com.educandoweb.course.entities.OrderItem;
 import com.educandoweb.course.entities.OrderSequence;
 import com.educandoweb.course.entities.Payment;
-import com.educandoweb.course.repositories.OrderItemRepository;
+
 import com.educandoweb.course.repositories.OrderRepository;
 import com.educandoweb.course.repositories.OrderSequenceRepository;
-import com.educandoweb.course.repositories.PaymentRepository;
+
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
 
@@ -108,15 +108,23 @@ public class OrderService {
         entity.setOrderStatus(obj.getOrderStatus());
         entity.setClient(obj.getClient());
         
-        // Atualizar pagamento
         if (obj.getPayment() != null) {
-            obj.getPayment().setOrder(entity); // ESSENCIAL para @MapsId
+            if (entity.getPayment() == null) {
+                // Se ainda não existe pagamento, cria novo
+                entity.setPayment(obj.getPayment());
+                entity.getPayment().setOrder(entity);
+                entity.getPayment().setMoment(Instant.now());
+            } else {
+                // Se já existe pagamento, apenas atualiza os campos
+                Payment existingPayment = entity.getPayment();
+                Payment newPayment = obj.getPayment();
 
-            if (obj.getPayment().getMoment() == null) {
-                obj.getPayment().setMoment(Instant.now());
+                existingPayment.setPaymentMethod(newPayment.getPaymentMethod());
+                existingPayment.setAmountPaid(newPayment.getAmountPaid());
+                existingPayment.setInstallments(newPayment.getInstallments());
+                existingPayment.setInterest(newPayment.getInterest());
+                existingPayment.setMoment(Instant.now());
             }
-
-            entity.setPayment(obj.getPayment());
         }
     }
 

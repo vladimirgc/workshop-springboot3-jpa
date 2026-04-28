@@ -10,11 +10,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.educandoweb.course.entities.Brand;
+import com.educandoweb.course.entities.Carrier;
 import com.educandoweb.course.entities.Category;
 import com.educandoweb.course.entities.Order;
 import com.educandoweb.course.entities.OrderItem;
 import com.educandoweb.course.entities.Payment;
 import com.educandoweb.course.entities.Product;
+import com.educandoweb.course.entities.Shipment;
 import com.educandoweb.course.entities.CorporateClient;
 import com.educandoweb.course.entities.IndividualClient;
 import com.educandoweb.course.entities.enums.OrderStatus;
@@ -44,6 +46,9 @@ public class TestConfig implements CommandLineRunner{
 	private OrderItemRepository orderItemRepository;
 	
 	@Autowired
+	private CarrierRepository carrierRepository;
+	
+	@Autowired
     private OrderService orderService;
 
     TestConfig(BrandRepository brandRepository) {
@@ -67,8 +72,15 @@ public class TestConfig implements CommandLineRunner{
 		Brand b7 = new Brand(null, "Samsung");
 		Brand b8 = new Brand(null, "Packt Publishing");
 		
+		Carrier car1 = new Carrier(null, "Correios");
+		Carrier car2 = new Carrier(null, "DHL");
+		Carrier car3 = new Carrier(null, "UBER");
+		Carrier car4 = new Carrier(null, "99Entregas");
+		Carrier car5 = new Carrier(null, "Lalamove");
+		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
 		brandRepository.saveAll(Arrays.asList(b1, b2, b3, b4, b5, b6, b7, b8));
+		carrierRepository.saveAll(Arrays.asList(car1, car2, car3, car4, car5));
 		
 		Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5,"", "2093035968245");
 		p1.setBrand(b3);
@@ -94,8 +106,7 @@ public class TestConfig implements CommandLineRunner{
 		p5.getCategories().add(cat2);
 		p6.getCategories().add(cat4);
 		
-		
-		
+				
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
 
 		IndividualClient u1 = new IndividualClient(null, "", "", "", "", "", "", "", "", "", "USUARIO_FINAL");
@@ -115,7 +126,9 @@ public class TestConfig implements CommandLineRunner{
 		CorporateClient c1 = new CorporateClient(null, "Business Ave", "500", "Suite 10", "Los Angeles", "CA", "90001", "contact@techcorp.com", "444444444", "11222333000199", "Tech Corp", "123456789");
 		CorporateClient c2 = new CorporateClient(null, "Industrial Road", "800", "", "Houston", "TX", "77001", "finance@buildit.com", "555555555", "99888777000155", "BuildIt Ltd", "987654321");
 
-	
+		Shipment sh1 = new Shipment(null, car1, "ABCX19633", Instant.parse("2019-06-30T10:53:07Z"), "", "Atraso devido a greve dos correios");
+		Shipment sh2 = new Shipment(null, car3, "SXCV-5526", Instant.parse("2019-09-30T10:53:07Z"), "", "");
+		
 		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.ABERTO, u1);
 		o1.setNumero(orderService.gerarNumeroPedido());
 
@@ -133,6 +146,7 @@ public class TestConfig implements CommandLineRunner{
 
 		Order o6 = new Order(null, Instant.parse("2019-08-05T09:05:45Z"), OrderStatus.ENVIADO, u5);
 		o6.setNumero(orderService.gerarNumeroPedido());
+		o6.setShipment(sh1);
 
 		Order o7 = new Order(null, Instant.parse("2019-08-10T18:33:50Z"), OrderStatus.CANCELADO, u6);
 		o7.setNumero(orderService.gerarNumeroPedido());
@@ -145,6 +159,7 @@ public class TestConfig implements CommandLineRunner{
 
 		Order o10 = new Order(null, Instant.parse("2018-08-18T16:29:37Z"), OrderStatus.ENVIADO, u9);
 		o10.setNumero(orderService.gerarNumeroPedido());
+		o10.setShipment(sh2);
 
 		Order o11 = new Order(null, Instant.parse("2018-08-20T11:11:11Z"), OrderStatus.FINALIZADO, u10);
 		o11.setNumero(orderService.gerarNumeroPedido());
@@ -205,9 +220,16 @@ public class TestConfig implements CommandLineRunner{
 
 		Payment pay3 = new Payment(null, Instant.parse("2019-08-12T23:30:00Z"), 100.99, "PIX", null, null, o8);
 		o8.setPayment(pay3);
+		
+		Payment pay4 = new Payment(null, Instant.parse("2019-09-29T23:30:00Z"), 2400.00, "PIX", null, null, o10);
+		o10.setPayment(pay4);
+		
+
+		Payment pay5 = new Payment(null, Instant.parse("2019-09-29T23:30:00Z"), 5000.00, "PIX", null, null, o6);
+		o6.setPayment(pay5);
 
 		
-		orderRepository.saveAll(Arrays.asList(o1, o4, o8));
+		orderRepository.saveAll(Arrays.asList(o1, o4, o8, o10, o6));
 
 		
 	}
