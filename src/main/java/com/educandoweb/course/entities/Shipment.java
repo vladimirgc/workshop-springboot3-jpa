@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -35,7 +36,7 @@ public class Shipment implements Serializable{
 	@JoinColumn(name = "carrier_id")
 	private Carrier carrier;
 	
-	@JsonIgnore
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name = "order_id")
 	private Order order;

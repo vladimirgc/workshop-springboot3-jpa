@@ -11,21 +11,24 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadService {
 
-    private final Path root = Paths.get("uploads/products");
+    private final Path root = Paths.get("uploads");
 
-    public String save(MultipartFile file) {
+    public String save(MultipartFile file, String folder) {
 
         try {
-            if (!Files.exists(root)) {
-                Files.createDirectories(root);
+        	
+        	Path folderPath = root.resolve(folder);
+        	
+            if (!Files.exists(folderPath)) {
+                Files.createDirectories(folderPath);
             }
 
             String filename = UUID.randomUUID() + "-" + file.getOriginalFilename();
-            Path destination = root.resolve(filename);
+            Path destination = folderPath.resolve(filename);
 
             Files.copy(file.getInputStream(), destination);
 
-            return "http://localhost:8080/uploads/products/" + filename;
+            return "http://localhost:8080/uploads/" + folder + "/" + filename;
 
         } catch (Exception e) {
             throw new RuntimeException("Erro ao salvar imagem", e);

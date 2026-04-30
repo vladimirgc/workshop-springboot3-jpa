@@ -7,8 +7,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.educandoweb.course.entities.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -51,6 +52,7 @@ public class Order implements Serializable {
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
 	
+	@JsonManagedReference
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Shipment shipment;
 	

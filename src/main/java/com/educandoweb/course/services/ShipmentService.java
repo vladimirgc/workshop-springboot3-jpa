@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-
+import com.educandoweb.course.entities.Order;
 import com.educandoweb.course.entities.Shipment;
-
+import com.educandoweb.course.repositories.OrderRepository;
 import com.educandoweb.course.repositories.ShipmentRepository;
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
@@ -21,6 +21,9 @@ public class ShipmentService {
 	
 	@Autowired
 	private ShipmentRepository repository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
 	
 	public List<Shipment> findAll(){
 		
@@ -34,6 +37,12 @@ public class ShipmentService {
 	}
 	
 	public Shipment insert(Shipment obj) {
+		if (obj.getOrder() != null && obj.getOrder().getId() != null) {
+	        Order order = orderRepository.findById(obj.getOrder().getId())
+	            .orElseThrow(() -> new RuntimeException("Order not found"));
+
+	        obj.setOrder(order);
+	    }
 		return repository.save(obj);
 	}
 	

@@ -21,61 +21,40 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 import com.educandoweb.course.entities.Product;
+import com.educandoweb.course.entities.Shipment;
 import com.educandoweb.course.services.ProductService;
+import com.educandoweb.course.services.ShipmentService;
 import com.educandoweb.course.services.UploadService;
 
 
 
 @RestController
-@RequestMapping(value = "/products")
+@RequestMapping(value = "/shipments")
 @CrossOrigin(origins = "http://localhost:5173") // Vite
-public class ProductResource {
+public class ShipmentResource {
 
 	@Autowired
-	private ProductService service;
+	private ShipmentService service;
 	
 	@Autowired
 	private UploadService uploadService;
 	
 	@GetMapping
-	public ResponseEntity<List<Product>> findAll(){
-		List<Product> list = service.findAll();
+	public ResponseEntity<List<Shipment>> findAll(){
+		List<Shipment> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	
-	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Product> findById(@PathVariable Long id){
-		Product obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
-	}
-	
-	@GetMapping("/barcode/{barCode}")
-	public ResponseEntity<Product> findByBarcode(@PathVariable String barCode) {
-	    Product product = service.findByBarcode(barCode);
-	    if (product == null) {
-	        return ResponseEntity.notFound().build();
-	    }
-	    return ResponseEntity.ok(product);
-	}
-
-	
-	@GetMapping("/category/{categoryId}")
-	public ResponseEntity<List<Product>> findByCategoryId(@PathVariable Long categoryId) {
-	    List<Product> list = service.findByCategoryId(categoryId);
-	    return ResponseEntity.ok().body(list);
-	}
-
-	
+		
+		
 	@PostMapping
-	public ResponseEntity<Product> insert(@RequestBody Product obj){
+	public ResponseEntity<Shipment> insert(@RequestBody Shipment obj){
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product obj){
+	public ResponseEntity<Shipment> update(@PathVariable Long id, @RequestBody Shipment obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok(obj);
 	}
@@ -89,7 +68,7 @@ public class ProductResource {
 	 @PostMapping("/upload")
 	 public ResponseEntity<Map<String, String>> uploadImage(
 	     @RequestParam("file") MultipartFile file) {
-	     String url = uploadService.save(file, "products");
+	     String url = uploadService.save(file, "shipments");
 	     return ResponseEntity.ok(Map.of("url", url));
 	 }
 	
