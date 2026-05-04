@@ -92,7 +92,7 @@ public class TestConfig implements CommandLineRunner{
 		p4.setBrand(b7);
 		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "", null);
 		p5.setBrand(b8);
-		Product p6 = new Product(null, "Age of Empires", "Game for PC.", 135.99, "http://localhost:8080/uploads/products/4eecf924-b621-4777-9a18-496d0f75eed1-Age_of_Empires_II.jpg", "5488194547672");
+		Product p6 = new Product(null, "Age of Empires", "Game for PC.", 135.99, "http://localhost:8080/uploads/products/4eecf924_Age_of_Empires_II.jpg", "5488194547672");
 		p6.setBrand(b1);
 		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
