@@ -23,7 +23,7 @@ public class UploadService {
                 Files.createDirectories(folderPath);
             }
 
-            String filename = UUID.randomUUID().toString().substring(0, 8) + "_" + file.getOriginalFilename();
+            String filename = UUID.randomUUID().toString().substring(0, 8) + "_" + file.getOriginalFilename().replaceAll("\\s+", "_").replaceAll("[^a-zA-Z0-9._-]", "");
             Path destination = folderPath.resolve(filename);
 
             Files.copy(file.getInputStream(), destination);

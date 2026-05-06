@@ -18,7 +18,9 @@ import com.educandoweb.course.entities.Payment;
 import com.educandoweb.course.entities.Product;
 import com.educandoweb.course.entities.Shipment;
 import com.educandoweb.course.entities.CorporateClient;
+import com.educandoweb.course.entities.Expense;
 import com.educandoweb.course.entities.IndividualClient;
+import com.educandoweb.course.entities.enums.ExpenseCategory;
 import com.educandoweb.course.entities.enums.OrderStatus;
 import com.educandoweb.course.repositories.*;
 import com.educandoweb.course.services.OrderService;
@@ -46,10 +48,15 @@ public class TestConfig implements CommandLineRunner{
 	private OrderItemRepository orderItemRepository;
 	
 	@Autowired
+	private ExpenseRepository expenseRepository;
+	
+	@Autowired
 	private CarrierRepository carrierRepository;
 	
 	@Autowired
     private OrderService orderService;
+	
+	
 
     TestConfig(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
@@ -141,7 +148,7 @@ public class TestConfig implements CommandLineRunner{
 		Order o4 = new Order(null, Instant.parse("2019-08-01T10:15:30Z"), OrderStatus.ABERTO, u3);
 		o4.setNumero(orderService.gerarNumeroPedido());
 
-		Order o5 = new Order(null, Instant.parse("2019-08-03T14:22:11Z"), OrderStatus.FINALIZADO, u4);
+		Order o5 = new Order(null, Instant.parse("2026-08-03T14:22:11Z"), OrderStatus.FINALIZADO, u4);
 		o5.setNumero(orderService.gerarNumeroPedido());
 
 		Order o6 = new Order(null, Instant.parse("2019-08-05T09:05:45Z"), OrderStatus.ENVIADO, u5);
@@ -224,13 +231,21 @@ public class TestConfig implements CommandLineRunner{
 		Payment pay4 = new Payment(null, Instant.parse("2019-09-29T23:30:00Z"), 2400.00, "PIX", null, null, o10);
 		o10.setPayment(pay4);
 		
-
 		Payment pay5 = new Payment(null, Instant.parse("2019-09-29T23:30:00Z"), 5000.00, "PIX", null, null, o6);
 		o6.setPayment(pay5);
 
+		Payment pay6 = new Payment(null, Instant.parse("2026-09-29T23:30:00Z"), 281.99, "PIX", null, null, o5);
+		o5.setPayment(pay6);
 		
-		orderRepository.saveAll(Arrays.asList(o1, o4, o8, o10, o6));
+		Payment pay7 = new Payment(null, Instant.parse("2020-09-29T23:30:00Z"), 10950.00, "PIX", null, null, o11);
+		o11.setPayment(pay7);
 
+		
+		orderRepository.saveAll(Arrays.asList(o1, o4, o8, o10, o6, o5, o11));
+		
+		Expense exp1 = new Expense(null, Instant.parse("2026-05-04T12:30:00Z"), "Tecidos Sintéticos", 2400.99, ExpenseCategory.MATERIAL, "");		
+		Expense exp2 = new Expense(null, Instant.parse("2026-05-04T12:45:00Z"), "Impressora térmica Epson", 499.99, ExpenseCategory.MATERIAL, "");	
+		expenseRepository.saveAll(Arrays.asList(exp1, exp2));
 		
 	}
 	
