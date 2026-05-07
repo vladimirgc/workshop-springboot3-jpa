@@ -16,6 +16,7 @@ import com.educandoweb.course.entities.Order;
 import com.educandoweb.course.entities.OrderItem;
 import com.educandoweb.course.entities.Payment;
 import com.educandoweb.course.entities.Product;
+import com.educandoweb.course.entities.Segment;
 import com.educandoweb.course.entities.Shipment;
 import com.educandoweb.course.entities.CorporateClient;
 import com.educandoweb.course.entities.Expense;
@@ -54,10 +55,12 @@ public class TestConfig implements CommandLineRunner{
 	private CarrierRepository carrierRepository;
 	
 	@Autowired
+	private SegmentRepository segmentRepository;
+	
+	@Autowired
     private OrderService orderService;
 	
 	
-
     TestConfig(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
     } 
@@ -136,45 +139,51 @@ public class TestConfig implements CommandLineRunner{
 		Shipment sh1 = new Shipment(null, car1, "ABCX19633", Instant.parse("2019-06-30T10:53:07Z"), "", "Atraso devido a greve dos correios");
 		Shipment sh2 = new Shipment(null, car3, "SXCV-5526", Instant.parse("2019-09-30T10:53:07Z"), "", "");
 		
-		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.ABERTO, u1);
+		Segment se1 = new Segment(null, "Atelier", "#780481", true);
+		Segment se2 = new Segment(null, "Higiene", "#0505bd", true);
+		Segment se3 = new Segment(null, "Papelaria", "#6d6d03", false);
+		
+		segmentRepository.saveAll(Arrays.asList(se1, se2, se3));
+		
+		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.ABERTO, u1, se1);
 		o1.setNumero(orderService.gerarNumeroPedido());
 
-		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.EM_PRODUCAO, u2);
+		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.FINALIZADO, u2, se2);
 		o2.setNumero(orderService.gerarNumeroPedido());
 
-		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.EM_PRODUCAO, u1);
+		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.EM_PRODUCAO, u1, se1);
 		o3.setNumero(orderService.gerarNumeroPedido());
 
-		Order o4 = new Order(null, Instant.parse("2019-08-01T10:15:30Z"), OrderStatus.ABERTO, u3);
+		Order o4 = new Order(null, Instant.parse("2019-08-01T10:15:30Z"), OrderStatus.ABERTO, u3, se1);
 		o4.setNumero(orderService.gerarNumeroPedido());
 
-		Order o5 = new Order(null, Instant.parse("2026-08-03T14:22:11Z"), OrderStatus.FINALIZADO, u4);
+		Order o5 = new Order(null, Instant.parse("2026-08-03T14:22:11Z"), OrderStatus.FINALIZADO, u4, se1);
 		o5.setNumero(orderService.gerarNumeroPedido());
 
-		Order o6 = new Order(null, Instant.parse("2019-08-05T09:05:45Z"), OrderStatus.ENVIADO, u5);
+		Order o6 = new Order(null, Instant.parse("2019-08-05T09:05:45Z"), OrderStatus.ENVIADO, u5, se1);
 		o6.setNumero(orderService.gerarNumeroPedido());
 		o6.setShipment(sh1);
 
-		Order o7 = new Order(null, Instant.parse("2019-08-10T18:33:50Z"), OrderStatus.CANCELADO, u6);
+		Order o7 = new Order(null, Instant.parse("2019-08-10T18:33:50Z"), OrderStatus.CANCELADO, u6, se1);
 		o7.setNumero(orderService.gerarNumeroPedido());
 
-		Order o8 = new Order(null, Instant.parse("2019-08-12T21:17:05Z"), OrderStatus.ABERTO, u7);
+		Order o8 = new Order(null, Instant.parse("2019-08-12T21:17:05Z"), OrderStatus.ABERTO, u7, se1);
 		o8.setNumero(orderService.gerarNumeroPedido());
 
-		Order o9 = new Order(null, Instant.parse("2019-08-15T07:44:19Z"), OrderStatus.EM_PRODUCAO, u8);
+		Order o9 = new Order(null, Instant.parse("2019-08-15T07:44:19Z"), OrderStatus.EM_PRODUCAO, u8, se1);
 		o9.setNumero(orderService.gerarNumeroPedido());
 
-		Order o10 = new Order(null, Instant.parse("2018-08-18T16:29:37Z"), OrderStatus.ENVIADO, u9);
+		Order o10 = new Order(null, Instant.parse("2018-08-18T16:29:37Z"), OrderStatus.ENVIADO, u9, se1);
 		o10.setNumero(orderService.gerarNumeroPedido());
 		o10.setShipment(sh2);
 
-		Order o11 = new Order(null, Instant.parse("2018-08-20T11:11:11Z"), OrderStatus.FINALIZADO, u10);
+		Order o11 = new Order(null, Instant.parse("2018-08-20T11:11:11Z"), OrderStatus.FINALIZADO, u10, se1);
 		o11.setNumero(orderService.gerarNumeroPedido());
 
-		Order o12 = new Order(null, Instant.parse("2017-08-22T13:55:42Z"), OrderStatus.CANCELADO, u11);
+		Order o12 = new Order(null, Instant.parse("2017-08-22T13:55:42Z"), OrderStatus.CANCELADO, u11, se1);
 		o12.setNumero(orderService.gerarNumeroPedido());
 
-		Order o13 = new Order(null, Instant.parse("2017-08-25T19:40:00Z"), OrderStatus.ABERTO, u12);
+		Order o13 = new Order(null, Instant.parse("2017-08-25T19:40:00Z"), OrderStatus.ABERTO, u12, se1);
 		o13.setNumero(orderService.gerarNumeroPedido());
 
 		
@@ -239,9 +248,12 @@ public class TestConfig implements CommandLineRunner{
 		
 		Payment pay7 = new Payment(null, Instant.parse("2020-09-29T23:30:00Z"), 10950.00, "PIX", null, null, o11);
 		o11.setPayment(pay7);
+		
+		Payment pay8 = new Payment(null, Instant.parse("2022-09-29T23:30:00Z"), 2500.00, "PIX", null, null, o2);
+		o2.setPayment(pay8);
 
 		
-		orderRepository.saveAll(Arrays.asList(o1, o4, o8, o10, o6, o5, o11));
+		orderRepository.saveAll(Arrays.asList(o1, o4, o8, o10, o6, o5, o11, o2));
 		
 		Expense exp1 = new Expense(null, Instant.parse("2026-05-04T12:30:00Z"), "Tecidos Sintéticos", 2400.99, ExpenseCategory.MATERIAL, "");		
 		Expense exp2 = new Expense(null, Instant.parse("2026-05-04T12:45:00Z"), "Impressora térmica Epson", 499.99, ExpenseCategory.MATERIAL, "");	

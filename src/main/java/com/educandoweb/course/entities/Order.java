@@ -7,10 +7,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.educandoweb.course.entities.enums.OrderStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -56,18 +54,22 @@ public class Order implements Serializable {
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Shipment shipment;
 	
+	@ManyToOne
+	@JoinColumn(name = "segment_id")
+	private Segment segment;
+	
 	public Order() {
 		
 		
 	}
 
-	public Order(Long id, Instant moment, OrderStatus orderStatus, Client client) {
+	public Order(Long id, Instant moment, OrderStatus orderStatus, Client client, Segment segment) {
 		super();
 		this.id = id;
 		this.moment = moment;
 		setOrderStatus(orderStatus);
 		this.client = client;
-		
+		this.segment = segment;
 	}
 
 	public Long getId() {
@@ -123,9 +125,7 @@ public class Order implements Serializable {
 	public Set<OrderItem> getItems(){
 		return items;
 	}
-	
-	
-	
+		
 	public Shipment getShipment() {
 		return shipment;
 	}
@@ -135,6 +135,14 @@ public class Order implements Serializable {
 		if (shipment != null) {
             shipment.setOrder(this); 
         }
+	}
+
+	public Segment getSegment() {
+		return segment;
+	}
+
+	public void setSegment(Segment segment) {
+		this.segment = segment;
 	}
 
 	public Double getTotal() {

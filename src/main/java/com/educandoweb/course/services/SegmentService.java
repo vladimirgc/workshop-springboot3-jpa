@@ -7,38 +7,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.educandoweb.course.entities.Expense;
-import com.educandoweb.course.repositories.ExpenseRepository;
+
+import com.educandoweb.course.entities.Segment;
+import com.educandoweb.course.repositories.SegmentRepository;
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class ExpenseService {
+public class SegmentService {
 	
 	@Autowired
-	private ExpenseRepository repository;
+	private SegmentRepository repository;
 	
-	public List<Expense> findAll(){
+	public List<Segment> findAll(){
 		
 		return repository.findAll();
 		
 	}
 	
-	public Expense findById(Long id) {
-		Optional<Expense> obj = repository.findById(id);
+	public Segment findById(Long id) {
+		Optional<Segment> obj = repository.findById(id);
 		return obj.get();
 	}
 	
-	
-	public Expense insert(Expense obj) {
+	public Segment insert(Segment obj) {
 		return repository.save(obj);
 	}
 	
-	public Expense update(Long id, Expense obj) {
+	public Segment update(Long id, Segment obj) {
 		try {
-			Expense entity = repository.getReferenceById(id);
+			Segment entity = repository.getReferenceById(id);
 		updateData(entity, obj);
 		return repository.save(entity);
 		}catch(EntityNotFoundException e) {
@@ -46,16 +46,14 @@ public class ExpenseService {
 		}
 	}
 	
-	private void updateData(Expense entity, Expense obj) {
-		entity.setAmount(obj.getAmount());
-		entity.setCategory(obj.getCategory());
-		entity.setDescription(obj.getDescription());
-		entity.setMoment(obj.getMoment());
-		entity.setReceiptUrl(obj.getReceiptUrl());
+	private void updateData(Segment entity, Segment obj) {
+		entity.setName(obj.getName());
+		entity.setColor(obj.getColor());
+		entity.setActive(obj.getActive());
 	}
 	
 	public void delete(Long id) {
-		Optional<Expense> obj = repository.findById(id);
+		Optional<Segment> obj = repository.findById(id);
 		if (obj.isPresent()) {
 			try {
 				repository.deleteById(id);
