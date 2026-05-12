@@ -255,8 +255,8 @@ public class TestConfig implements CommandLineRunner{
 		
 		orderRepository.saveAll(Arrays.asList(o1, o4, o8, o10, o6, o5, o11, o2));
 		
-		Expense exp1 = new Expense(null, Instant.parse("2026-05-04T12:30:00Z"), "Tecidos Sintéticos", 2400.99, ExpenseCategory.MATERIAL, "");		
-		Expense exp2 = new Expense(null, Instant.parse("2026-05-04T12:45:00Z"), "Impressora térmica Epson", 499.99, ExpenseCategory.MATERIAL, "");	
+		Expense exp1 = new Expense(null, Instant.parse("2026-05-04T12:30:00Z"), "Tecidos Sintéticos", 2400.99, ExpenseCategory.MATERIAL, "", se1);		
+		Expense exp2 = new Expense(null, Instant.parse("2026-05-04T12:45:00Z"), "Impressora térmica Epson", 499.99, ExpenseCategory.MATERIAL, "", se2);	
 		expenseRepository.saveAll(Arrays.asList(exp1, exp2));
 		
 	}

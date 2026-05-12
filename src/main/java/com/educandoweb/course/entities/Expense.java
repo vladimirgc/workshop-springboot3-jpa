@@ -12,6 +12,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,9 +36,12 @@ public class Expense implements Serializable{
 	private ExpenseCategory category;	    
 	private String receiptUrl;
 	
+	@ManyToOne
+	@JoinColumn(name = "segment_id")
+	private Segment segment;
 	
 	public Expense(Long id, Instant moment, String description, Double amount, ExpenseCategory category,
-			String receiptUrl) {
+			String receiptUrl, Segment segment) {
 		super();
 		this.id = id;
 		this.moment = moment;
@@ -44,6 +49,7 @@ public class Expense implements Serializable{
 		this.amount = amount;
 		this.category = category;
 		this.receiptUrl = receiptUrl;
+		this.segment = segment;
 	}
 
 
@@ -110,6 +116,16 @@ public class Expense implements Serializable{
 
 	public void setReceiptUrl(String receiptUrl) {
 		this.receiptUrl = receiptUrl;
+	}
+	
+
+	public Segment getSegment() {
+		return segment;
+	}
+
+
+	public void setSegment(Segment segment) {
+		this.segment = segment;
 	}
 
 
