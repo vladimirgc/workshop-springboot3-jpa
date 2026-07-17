@@ -45,6 +45,12 @@ public class OrderResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@GetMapping(value = "/numero/{numero}")
+	public ResponseEntity<Order> findByNumero(@PathVariable Long numero){
+		Order obj = service.findByNumero(numero);
+		return ResponseEntity.ok().body(obj);
+	}
+	
 	@GetMapping("/status")
 	public ResponseEntity<List<Map<String, Object>>> getOrderStatus() {
 	    List<Map<String, Object>> statusList = Arrays.stream(OrderStatus.values())

@@ -91,7 +91,10 @@ public class OrderService {
 		return obj.get();
 	}
 	
-	
+	public Order findByNumero(Long numero) {
+		Optional<Order> obj = repository.findByNumero(numero);
+		return obj.get();
+	}
 	
 	public Order update(Long id, Order obj) {
         try {
