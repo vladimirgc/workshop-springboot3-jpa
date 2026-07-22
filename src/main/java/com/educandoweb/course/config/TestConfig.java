@@ -120,18 +120,17 @@ public class TestConfig implements CommandLineRunner{
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
 
 		IndividualClient u1 = new IndividualClient(null, "", "", "", "", "", "", "", "", "", "USUARIO_FINAL");
-		IndividualClient u2 = new IndividualClient(null, "Oak Street", "200", "", "Chicago", "IL", "60007", "joao@gmail.com", "222222222", "98765432100", "João Silva");
-		IndividualClient u3 = new IndividualClient(null, "Pine Road", "300", "", "Miami", "FL", "33101", "ana@gmail.com", "333333333", "11122233344", "Ana Souza");
-		IndividualClient u4 = new IndividualClient(null, "Maple Street", "400", "", "Phoenix", "AZ", "85001", "carlos@gmail.com", "444444444", "22233344455", "Carlos Mendes");
-		IndividualClient u5 = new IndividualClient(null, "Cedar Avenue", "500", "", "Miami", "FL", "33101", "fernanda@gmail.com", "555555555", "33344455566", "Fernanda Lima");
-		IndividualClient u6 = new IndividualClient(null, "Sunset Blvd", "600", "", "San Diego", "CA", "92101", "bruno@gmail.com", "666666666", "44455566677", "Bruno Costa");
-		IndividualClient u7 = new IndividualClient(null, "Broadway", "700", "Suite 10", "New York", "NY", "10002", "juliana@gmail.com", "777777777", "55566677788", "Juliana Alves");
-		IndividualClient u8 = new IndividualClient(null, "Lake Shore Dr", "800", "", "Chicago", "IL", "60008", "rafael@gmail.com", "888888888", "66677788899", "Rafael Martins");
-		IndividualClient u9 = new IndividualClient(null, "Ocean Drive", "900", "", "Miami", "FL", "33102", "patricia@gmail.com", "999999999", "77788899900", "Patricia Rocha");
-		IndividualClient u10 = new IndividualClient(null, "Elm Street", "1000", "", "Dallas", "TX", "75001", "lucas@gmail.com", "101010101", "88899900011", "Lucas Pereira");
-		IndividualClient u11 = new IndividualClient(null, "River Road", "1100", "", "Seattle", "WA", "98001", "camila@gmail.com", "111111111", "99900011122", "Camila Fernandes");
-		IndividualClient u12 = new IndividualClient(null, "Hill Street", "1200", "", "Boston", "MA", "02101", "marcos@gmail.com", "121212121", "00011122233", "Marcos Silva");
-
+		IndividualClient u2 = new IndividualClient(null, "Rua das Acácias", "200", "", "Rio de Janeiro", "RJ", "22041-001", "joao@gmail.com", "222222222", "98765432100", "João Silva");
+		IndividualClient u3 = new IndividualClient(null, "Avenida Paulista", "300", "Conjunto 12", "São Paulo", "SP", "01310-100", "ana@gmail.com", "333333333", "11122233344", "Ana Souza");
+		IndividualClient u4 = new IndividualClient(null, "Rua Goiás", "400", "", "Belo Horizonte", "MG", "30130-010", "carlos@gmail.com", "444444444", "22233344455", "Carlos Mendes");
+		IndividualClient u5 = new IndividualClient(null, "Rua das Palmeiras", "500", "", "Curitiba", "PR", "80010-000", "fernanda@gmail.com", "555555555", "33344455566", "Fernanda Lima");
+		IndividualClient u6 = new IndividualClient(null, "Avenida Beira Mar", "600", "", "Fortaleza", "CE", "60165-121", "bruno@gmail.com", "666666666", "44455566677", "Bruno Costa");
+		IndividualClient u7 = new IndividualClient(null, "Rua XV de Novembro", "700", "Sala 10", "Curitiba", "PR", "80020-310", "juliana@gmail.com", "777777777", "55566677788", "Juliana Alves");
+		IndividualClient u8 = new IndividualClient(null, "Avenida Atlântica", "800", "", "Rio de Janeiro", "RJ", "22021-001", "rafael@gmail.com", "888888888", "66677788899", "Rafael Martins");
+		IndividualClient u9 = new IndividualClient(null, "Rua das Flores", "900", "", "Porto Alegre", "RS", "90020-001", "patricia@gmail.com", "999999999", "77788899900", "Patricia Rocha");
+		IndividualClient u10 = new IndividualClient(null, "Avenida Afonso Pena", "1000", "", "Belo Horizonte", "MG", "30130-003", "lucas@gmail.com", "101010101", "88899900011", "Lucas Pereira");
+		IndividualClient u11 = new IndividualClient(null, "Rua Sete de Setembro", "1100", "", "Salvador", "BA", "40060-001", "camila@gmail.com", "111111111", "99900011122", "Camila Fernandes");
+		IndividualClient u12 = new IndividualClient(null, "Avenida Brasil", "1200", "", "Brasília", "DF", "70040-010", "marcos@gmail.com", "121212121", "00011122233", "Marcos Silva");
 		
 		CorporateClient c1 = new CorporateClient(null, "Business Ave", "500", "Suite 10", "Los Angeles", "CA", "90001", "contact@techcorp.com", "444444444", "11222333000199", "Tech Corp", "123456789");
 		CorporateClient c2 = new CorporateClient(null, "Industrial Road", "800", "", "Houston", "TX", "77001", "finance@buildit.com", "555555555", "99888777000155", "BuildIt Ltd", "987654321");
