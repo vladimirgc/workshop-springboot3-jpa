@@ -227,31 +227,31 @@ public class TestConfig implements CommandLineRunner{
 		        oi17, oi18, oi19
 		));
 	
-		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), 181.00, "PIX", null, null, o1);
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), 181.00, "PIX", null, null, null, o1);
 		o1.setPayment(pay1);
 		
-		Payment pay2 = new Payment(null, Instant.parse("2019-08-01T12:20:30Z"), 5790.00, "DINHEIRO", null, null, o4);
+		Payment pay2 = new Payment(null, Instant.parse("2019-08-01T12:20:30Z"), 5790.00, "DINHEIRO", null, null, null, o4);
 		o4.setPayment(pay2);
 
-		Payment pay3 = new Payment(null, Instant.parse("2019-08-12T23:30:00Z"), 100.99, "PIX", null, null, o8);
+		Payment pay3 = new Payment(null, Instant.parse("2019-08-12T23:30:00Z"), 100.99, "PIX", null, null, null, o8);
 		o8.setPayment(pay3);
 		
-		Payment pay4 = new Payment(null, Instant.parse("2019-09-29T23:30:00Z"), 2400.00, "PIX", null, null, o10);
+		Payment pay4 = new Payment(null, Instant.parse("2019-09-29T23:30:00Z"), 2400.00, "PIX", null, null, null, o10);
 		o10.setPayment(pay4);
 		
-		Payment pay5 = new Payment(null, Instant.parse("2019-09-29T23:30:00Z"), 5000.00, "PIX", null, null, o6);
+		Payment pay5 = new Payment(null, Instant.parse("2019-09-29T23:30:00Z"), 5000.00, "PIX", null, null, null, o6);
 		o6.setPayment(pay5);
 
-		Payment pay6 = new Payment(null, Instant.parse("2026-06-29T23:30:00Z"), 5790.00, "PIX", null, null, o5);
+		Payment pay6 = new Payment(null, Instant.parse("2026-06-29T23:30:00Z"), 5790.00, "PIX", null, null, null, o5);
 		o5.setPayment(pay6);
 		
-		Payment pay7 = new Payment(null, Instant.parse("2020-09-29T23:30:00Z"), 10950.00, "PIX", null, null, o11);
+		Payment pay7 = new Payment(null, Instant.parse("2020-09-29T23:30:00Z"), 10950.00, "PIX", null, null, null, o11);
 		o11.setPayment(pay7);
 		
-		Payment pay8 = new Payment(null, Instant.parse("2022-09-29T23:30:00Z"), 2500.00, "PIX", null, null, o2);
+		Payment pay8 = new Payment(null, Instant.parse("2022-09-29T23:30:00Z"), 2500.00, "PIX", null, null, null, o2);
 		o2.setPayment(pay8);
 		
-		Payment pay9 = new Payment(null, Instant.parse("2022-09-29T23:30:00Z"), 3750.00, "PIX", null, null, o13);
+		Payment pay9 = new Payment(null, Instant.parse("2022-09-29T23:30:00Z"), 3750.00, "PIX", null, null, null, o13);
 		o13.setPayment(pay9);
 		
 		orderRepository.saveAll(Arrays.asList(o1, o4, o8, o10, o6, o5, o11, o2, o13));

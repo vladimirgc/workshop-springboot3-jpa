@@ -43,6 +43,7 @@ public class OrderService {
 
 	        //associa cada item ao pedido
 	        if (obj.getItems() != null) {
+	        	      		            
 	            for (OrderItem item : obj.getItems()) {
 	                item.setOrder(obj);
 	            }
@@ -52,9 +53,9 @@ public class OrderService {
 	        if (obj.getPayment() != null) {
 	            obj.getPayment().setOrder(obj);
 	            obj.getPayment().setMoment(Instant.now());
+	            obj.getPayment().calculateAmountPaid(obj.getTotal());
 	        }
-
-	        //UMA ÚNICA operação resolve tudo
+	        
 	        return repository.save(obj);
 	    }
 	
@@ -126,8 +127,10 @@ public class OrderService {
                 existingPayment.setAmountPaid(newPayment.getAmountPaid());
                 existingPayment.setInstallments(newPayment.getInstallments());
                 existingPayment.setInterest(newPayment.getInterest());
+                existingPayment.setDiscount(newPayment.getDiscount());
                 existingPayment.setMoment(Instant.now());
             }
+            	entity.getPayment().calculateAmountPaid(entity.getTotal());
         }
     }
 

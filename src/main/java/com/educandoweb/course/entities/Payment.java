@@ -31,6 +31,7 @@ public class Payment implements Serializable {
 	private String paymentMethod; // DINHEIRO, DEBITO, CARTAO_CREDITO, PIX
 	private Integer installments; // parcelas do cartão
 	private Double interest; // juros se houver
+	private Double discount; //desconto
 	
 	@JsonIgnore
 	@OneToOne
@@ -42,7 +43,7 @@ public class Payment implements Serializable {
 	}
 
 	public Payment(Long id, Instant moment, Double amountPaid, String paymentMethod, Integer installments,
-			Double interest, Order order) {
+			Double interest, Double discount, Order order) {
 		super();
 		this.id = id;
 		this.moment = moment;
@@ -50,6 +51,7 @@ public class Payment implements Serializable {
 		this.paymentMethod = paymentMethod;
 		this.installments = installments;
 		this.interest = interest;
+		this.discount = discount;
 		this.order = order;
 	}
 
@@ -102,6 +104,14 @@ public class Payment implements Serializable {
 	public void setInterest(Double interest) {
 		this.interest = interest;
 	}
+		
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
 
 	public Order getOrder() {
 		return order;
@@ -109,6 +119,17 @@ public class Payment implements Serializable {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+	
+	public void calculateAmountPaid(Double total) {
+
+	    double discountValue = discount != null ? discount : 0.0;
+	    double interestValue = interest != null ? interest : 0.0;
+
+	    double totalWithDiscount = total - discountValue;
+
+	    this.amountPaid =
+	        totalWithDiscount * (1 + interestValue / 100);
 	}
 
 	@Override
@@ -127,6 +148,7 @@ public class Payment implements Serializable {
 		Payment other = (Payment) obj;
 		return Objects.equals(id, other.id);
 	}
+	
 	
 	
 }
