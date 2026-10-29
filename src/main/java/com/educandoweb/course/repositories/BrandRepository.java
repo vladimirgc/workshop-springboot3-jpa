@@ -1,9 +1,12 @@
 package com.educandoweb.course.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.educandoweb.course.entities.Brand;
 
 
-public interface BrandRepository extends JpaRepository<Brand, Long>{
 
+public interface BrandRepository extends JpaRepository<Brand, Long>{
+	Optional<Brand> findByName(String name);
 }

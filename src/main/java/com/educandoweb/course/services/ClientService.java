@@ -8,6 +8,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.educandoweb.course.entities.Client;
+import com.educandoweb.course.entities.CorporateClient;
+import com.educandoweb.course.entities.IndividualClient;
 import com.educandoweb.course.repositories.ClientRepository;
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
@@ -50,18 +52,61 @@ public class ClientService {
 	
 	
 	public Client update(Long id, Client obj) {
+		 try {
+		        Client entity = repository.findById(id)
+		                .orElseThrow(() -> new ResourceNotFoundException(id));
+
+		        updateData(entity, obj);
+
+		        return repository.save(entity);
+
+		    } catch (EntityNotFoundException e) {
+		        throw new ResourceNotFoundException(id);
+		    }
+		
+		/*
 		try {
 		Client entity = repository.getReferenceById(id);
 		updateData(entity, obj);
 		return repository.save(entity);
 		}catch(EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
-		}
+		}*/
 	}
 
 	private void updateData(Client entity, Client obj) {
-		entity.setEmail(obj.getEmail());
-		entity.setPhone(obj.getPhone());		
+		// Campos comuns a todos os clientes
+	    entity.setEmail(obj.getEmail());
+	    entity.setPhone(obj.getPhone());
+	    entity.setStreet(obj.getStreet());
+	    entity.setNumber(obj.getNumber());
+	    entity.setAddressLine2(obj.getAddressLine2());
+	    entity.setCity(obj.getCity());
+	    entity.setState(obj.getState());
+	    entity.setPostalCode(obj.getPostalCode());
+
+	    // Pessoa Física
+	    if (entity instanceof IndividualClient
+	            && obj instanceof IndividualClient) {
+
+	        IndividualClient entityPF = (IndividualClient) entity;
+	        IndividualClient objPF = (IndividualClient) obj;
+
+	        entityPF.setName(objPF.getName());
+	        entityPF.setCpf(objPF.getCpf());
+	    }
+
+	    // Pessoa Jurídica
+	    if (entity instanceof CorporateClient
+	            && obj instanceof CorporateClient) {
+
+	        CorporateClient entityPJ = (CorporateClient) entity;
+	        CorporateClient objPJ = (CorporateClient) obj;
+
+	        entityPJ.setCorporateName(objPJ.getCorporateName());
+	        entityPJ.setCnpj(objPJ.getCnpj());
+	        entityPJ.setStateRegistration(objPJ.getStateRegistration());
+	    }		
 	}
 	
 }
